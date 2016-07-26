@@ -1,2 +1,76 @@
-<p>Index page all events will be shown here
-</p>
+
+<% if @events.present?%>
+<div class="panel panel-primary">
+       <div class="panel-heading">
+          <h3 class="panel-title">
+            <span class="badge" style="margin-left:40%;">
+       </div>
+       <div class="panel-body">
+          <div class="well">
+             <ul class="list-group">
+              <h2>All Events</h2>
+           <%@events.each do |event|%>
+              <li class="list-group-item" style="margin-top:20px">
+                <div class="panel-body">
+		              <h2>Event title:  <u><%= event.title %></u></h2>
+		               <i>Discription</i>: <%= event.disc%>
+		                  <br>
+		              <%=image_tag(event.image.url, height:"15%;", width:"15%;") if event.image.present?%>
+		                  <br>
+                      <%if current_user.is_already_joined event%>
+                        <a href="/users/<%= current_user.id%>/<%=event.id%>/leave_event" class="btn btn-danger btn-xs">Leave</a>
+                       <%else%>
+                        <a href="/users/<%= current_user.id%>/<%=event.id%>/join_event" class="btn btn-success btn-xs">Join</a>
+                      <%end%> 
+                      <a href="/events/<%=event.id%>/like" class="btn btn-success btn-xs">Like</a> <%=event.likes.size%>
+                          </br>
+		              created by :<%= event.user.username%>
+                  Comments:
+              <ul class="list-group">
+                <% if event.comments.present?%>
+                      <% event.comments.each do |comment|%>
+                       <li class="list-group-item">
+                         <div style="word-break:break-all;">
+                          <%= comment.content%>
+                          <br>
+                                                  <span class="badge">
+                            Commented By:<%= comment.user.username%></span> 
+                          </div>
+                          </li>
+                      <%end%>
+                <%end%>
+                  <%= current_user.username%>
+                  <%= form_for :comment, :url=> event_comment_path(event) do |f|%>
+                  <%= f.text_area :content %><br>
+                  <%= f.submit "Submit" %>
+                  <%end%> 
+              </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+           	    </div>
+      	      </li>
+            <% end %>
+            </u>
+          </div>
+      </div>
+  </div>
+<% else %>
+<h4>
+  No Post Available ..<%=link_to"Create New Event", new_event_path%>
+</h4>
+<%end%>

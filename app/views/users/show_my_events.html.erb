@@ -1,0 +1,33 @@
+
+<% if @my_events.present?%>
+<div class="panel panel-primary">
+       <div class="panel-heading">
+          <h3 class="panel-title">
+            <span class="badge" style="margin-left:40%;">
+       </div>
+       <div class="panel-body">
+          <div class="well">
+             <ul class="list-group">
+              <h2>All Events</h2>
+           <%@my_events.each do |event|%>
+              <li class="list-group-item" style="margin-top:20px">
+                <div class="panel-body">
+		              <h2>Event title:  <u><%= event.title %></u></h2>
+		               <i>Discription</i>: <%= event.disc%>
+		                  <br>
+		              <%=image_tag(event.image.url, height:"15%;", width:"15%;") if event.image.present?%>
+		                  <br>
+		                  <a href="#" class="btn btn-danger btn-xs">Delete</a>
+                          </br>
+           	    </div>
+      	      </li>
+            <% end %>
+            </u>
+          </div>
+      </div>
+  </div>
+<% else %>
+<h4>
+  No Post Available ..<%=link_to"Create New Event", new_event_path%>
+</h4>
+<%end%>

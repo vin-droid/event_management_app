@@ -1,19 +1,29 @@
 class EventsController < ApplicationController
 
 before_action :authenticate_user!
-before_action :find_event, only:[:show, :destroy, :update, :edit]
+before_action :find_event, only:[:show, :destroy, :update, :edit, :like]
 
 
 def index
-	@events  = Event.all
+	@events  = Event.all.where.not(user_id: current_user.id).includes(:comments,:guests)
 end
 def show
 	@guests = Event.where(id: @event.guest_ids) 
-	#code here for all guest users
+end
+def like
+	if !@event.likes.include?(current_user.id)
+	    @event.likes << current_user.id 
+	    @event.save
+    else
+    	@event.likes.delete(current_user.id)
+    	@event.save
+    end
+    redirect_to '/'
 end
 
+
 def create
-	@event = Event.new(find_params)
+	@event = current_user.own_events.new(find_params)
 	if @event.save!
 		redirect_to root_path
 		flash[:success] = "Event has been succesfully Created"
@@ -46,7 +56,7 @@ def find_event
 	@event = Event.find(params[:id])
 end
 def find_params
-	params[:event].require(:title, :disc, :start_at, :end_at, :image)
+	params.require(:event).permit(:title, :disc, :start_at, :end_at, :image)
 end
 
 end

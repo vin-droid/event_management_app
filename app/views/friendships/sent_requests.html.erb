@@ -1,0 +1,25 @@
+
+<% if @sent_requests.present?%>
+<div class="panel panel-primary">
+       <div class="panel-heading">
+          <h3 class="panel-title">
+            <span class="badge" style="margin-left:40%;">
+       </div>
+       <div class="panel-body">
+          <div class="well">
+             <ul class="list-group">
+              <h2>All Friends </h2>
+			    <p>find  friends page</p>
+				<%@sent_requests.each do|request|%>
+         <li class="list-group-item">
+					<%=request.friend_id%> <a href="/send_request/<%=request.id%>" class="btn btn-danger btn-xs"> Cancel</a></br></li>
+					<%end%>
+            </u>
+          </div>
+      </div>
+  </div>
+<% else %>
+<h4>
+	no sent friendship request
+</h4>
+<%end%>
