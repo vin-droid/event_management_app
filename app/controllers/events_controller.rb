@@ -2,20 +2,21 @@ class EventsController < ApplicationController
 
 before_action :authenticate_user!
 before_action :find_event, only:[:show, :destroy, :update, :edit, :like]
+before_action :find_user 
 
 
 def index
-	@events  = Event.all.where.not(user_id: current_user.id).includes(:comments,:guests)
+	@events  = Event.all.where.not(user_id: @current_user.id).includes(:comments,:guests)
 end
 def show
 	@guests = Event.where(id: @event.guest_ids) 
 end
 def like
-	if !@event.likes.include?(current_user.id)
-	    @event.likes << current_user.id 
+	if !@event.likes.include?(@current_user.id)
+	    @event.likes << @current_user.id 
 	    @event.save
     else
-    	@event.likes.delete(current_user.id)
+    	@event.likes.delete(@current_user.id)
     	@event.save
     end
     redirect_to '/'
@@ -23,7 +24,7 @@ end
 
 
 def create
-	@event = current_user.own_events.new(find_params)
+	@event = @current_user.own_events.new(find_params)
 	if @event.save!
 		redirect_to root_path
 		flash[:success] = "Event has been succesfully Created"

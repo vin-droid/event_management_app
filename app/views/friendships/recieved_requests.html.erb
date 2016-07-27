@@ -8,17 +8,18 @@
        <div class="panel-body">
           <div class="well">
              <ul class="list-group">
-              <h2>All Friends </h2>
-			    <p>find  friends page</p>
+              <h2>Recieved Friend Requests </h2>
 				<%@recieved_requests.each do|user|%>
          <li class="list-group-item">
-					<%=user.username%> <a href="/send_request/<%=user.id%>" class="btn btn-success btn-xs">Add</a></br></li>
+					<%=user.username%> <a href="/send_request/<%=user.id%>" class="btn btn-success btn-xs">Confirm</a>
+          <%=user.username%> <a href="/send_request/<%=user.id%>" class="btn btn-success btn-xs">Delete Request</a>
+        </br></li>
 					<%end%>
             </u>
           </div>
       </div>
   </div>
 <% else %>
-<h4> no recieved request
+<h4> No Recieved Request Yet!
 </h4>
 <%end%>

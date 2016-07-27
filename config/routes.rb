@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get 'friends/requests/sent'      => 'friendships#sent_requests',   as: :sent_friendship_requests
   get 'friends/requests/recieved' => 'friendships#recieved_requests', as: :recieved_friendship_requests
   get 'send_request/:friend_id' => 'friendships#send_request', as: :send_friendship_request
-  delete 'cancel_request/:friend_id' => 'friendships#cancel_request', as: :cancel_friendship_request
+  get 'cancel_request/:friend_id' => 'friendships#cancel_request', as: :cancel_friendship_request
   get  'accept_request/:friend_id'   => 'friendships#accept_request', as: :accept_friendship_request
   get '/:id/friends' => 'users#friends', as: :friends
   get '/:id/find_friends' => 'users#find_friends', as: :find_friends 

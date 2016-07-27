@@ -8,11 +8,10 @@
        <div class="panel-body">
           <div class="well">
              <ul class="list-group">
-              <h2>All Friends </h2>
-			    <p>find  friends page</p>
+              <h2>Sent Friend Request </h2>
 				<%@sent_requests.each do|request|%>
          <li class="list-group-item">
-					<%=request.friend_id%> <a href="/send_request/<%=request.id%>" class="btn btn-danger btn-xs"> Cancel</a></br></li>
+					<%=request.reciever.username %> &nbsp;&nbsp;&nbsp;&nbsp;<a href="/cancel_request/<%=request.reciever.id%>" class="btn btn-danger btn-xs"> Cancel</a></br></li>
 					<%end%>
             </u>
           </div>
@@ -20,6 +19,6 @@
   </div>
 <% else %>
 <h4>
-	no sent friendship request
+	NO Sent Request Yet!
 </h4>
 <%end%>

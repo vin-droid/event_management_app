@@ -12,7 +12,6 @@ before_action :authenticate_user!
     	@users = current_user.has_friendshipable_friends
     end
     def user_join_event
-        p"===================================user join controller"
     	@user.join_event(params[:event_id])
     	redirect_to '/'
     end
@@ -23,9 +22,6 @@ before_action :authenticate_user!
     	@user.leave_event(params[:event_id])
     	redirect_to '/'
     end
-
- 
-
     def find_user
    	   @user = User.find(params[:id])
     end
