@@ -13,10 +13,14 @@
               <li class="list-group-item" style="margin-top:20px">
                 <div class="panel-body">
 		              <h2>Event title:  <u><%= event.title %></u></h2>
-		               <i>Discription</i>: <%= event.disc%>
+		               <h5><i>Discription</i><h5> : <%= event.disc%>
 		                  <br>
 		              <%=image_tag(event.image.url, height:"15%;", width:"15%;") if event.image.present?%>
 		                  <br>
+                      <%count = event.guests.count%>
+                      <%if count >0%>
+                       <p><%= count %> people joined your event.
+                      <%end%>
 		                  <a href="#" class="btn btn-danger btn-xs">Delete</a>
                           </br>
            	    </div>
@@ -28,6 +32,6 @@
   </div>
 <% else %>
 <h4>
-  No Post Available ..<%=link_to"Create New Event", new_event_path%>
+  No Events are Available...<%=link_to"Create Your First Event", new_event_path%>
 </h4>
 <%end%>

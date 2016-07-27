@@ -6,4 +6,6 @@ class Event < ApplicationRecord
  	mount_uploader :image, AvatarUploader
  	has_many :comments, dependent: :destroy 
 
+ 	validates :image,:start_at,:end_at,:image,:disc,:title, presence:true
+
 end

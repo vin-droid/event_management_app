@@ -22,7 +22,7 @@ gem 'coffee-rails', '~> 4.2'
 # gem 'therubyracer', platforms: :ruby
 
 gem 'pg'
-gem 'rails_12factor'
+#gem 'rails_12factor'
 gem 'carrierwave'
 gem 'cloudinary'
 gem 'will_paginate'

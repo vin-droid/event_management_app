@@ -9,6 +9,7 @@
 <body>
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
+			<%@current_user = current_user%>
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -20,11 +21,10 @@
 			</div>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
 				<ul class="nav navbar-nav">
-					<% if current_user %>
+					<% if @current_user %>
 					<li>
 						<div class="navbar-brand">
-							<%@user = current_user%>
-							Signed In As : <i><%= link_to "#{current_user.username}",user_path(@user)%></i>
+							Signed In As : <i><%= link_to "#{@current_user.username}",user_path(@current_user)%></i>
 						</div>
 					</li>
 				
@@ -32,40 +32,27 @@
                        <li class="active"><a href="/"> Home <span class="sr-only">(current)</span></a></li>
                         <li><a href="/events/new"> Create New Events </a></li>
 					
-					<li><%=link_to"My Events", my_events_path(current_user)%></li>
-					<li><%=link_to"Friends", friends_path(current_user)%></li>
+					<li><%=link_to"My Events", my_events_path(@current_user)%></li>
+					<li><%=link_to"Friends", friends_path(@current_user)%></li>
+					
+
+
+
 					<li class="dropdown open">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Friend requests <span class="caret"></span></a> 
+          <a href="/friends/requests/sent" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Friend requests <span class="caret"></span></a> 
 
           <ul class="dropdown-menu" role="menu">
             <li><a href="/friends/requests/sent">sent requests</a></li>
             <li><a href="/friends/requests/recieved">recivece requests</a></li>
         </ul>
         </li>
-					<li><%=link_to"Find Friends", find_friends_path(current_user) %></li>
+					<li><%=link_to"Find Friends", find_friends_path(@current_user) %></li>
 
 
 					<% end %>
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					<% if current_user %>
-					  <li>
-						<div class="dropdown">
-							<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-							<span class="badge">
-							(
-							 <%a=0%>
-
-						</div>
-					  </li>
-					  <li>
-						 <div class="dropdown">
-							<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
-							<span class="badge">
-									(
-				     			<%a=0%>
-    					 </div>	
-					 </li>							
+					<% if @current_user %>
 					 <li>
 						<%= link_to "Log Out", destroy_user_session_path, method: :delete %>
 					 </li>

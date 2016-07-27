@@ -4,7 +4,7 @@ class User < ApplicationRecord
 devise :database_authenticatable, :registerable,
 :recoverable, :rememberable, :trackable, :validatable
 
-has_many :comments, dependent: :destroy
+has_many :comments, dependent: :destroy,inverse_of: :user
 has_many :friendships,  class_name:"Friendship", dependent: :destroy
 has_many :friends, through: :friendship, dependent: :destroy
 has_many :guests_events, class_name:"GuestsEvent"
@@ -22,7 +22,7 @@ def leave_event event
 end
 def friends
     ids = Array.new
-    friendshipable_friend = Friendship.where('(user_id = ? OR friend_id =?) AND (status=?)', self.id, self.id, "accept").map{
+    Friendship.where('(user_id = ? OR friend_id =?) AND (status=?)', self.id, self.id, "accept").map{
         |friendship|
         if friendship.friend_id == self.id
             ids << friendship.user_id
@@ -30,11 +30,11 @@ def friends
             ids<< friendship.friend_id
         end
     }
-    friends = User.where(id: ids)                            
+    my_friends = User.where(id: ids)                            
 end
 def has_friendshipable_friends
     ids = Array.new
-    friendshipable_friend = Friendship.where('user_id = ? OR friend_id =?', self.id, self.id).map{
+    Friendship.where('user_id = ? OR friend_id =?', self.id, self.id).map{
         |friendship|
         if friendship.friend_id == self.id
             ids << friendship.user_id
@@ -49,5 +49,4 @@ end
    def is_already_joined event
         GuestsEvent.where(user_id: self.id, event_id: event).present?
     end
-
 end

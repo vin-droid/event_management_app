@@ -11,7 +11,8 @@
               <h2>Sent Friend Request </h2>
 				<%@sent_requests.each do|request|%>
          <li class="list-group-item">
-					<%=request.reciever.username %> &nbsp;&nbsp;&nbsp;&nbsp;<a href="/cancel_request/<%=request.reciever.id%>" class="btn btn-danger btn-xs"> Cancel</a></br></li>
+          <%reciever = request.reciever %>
+					<%=reciever.username %> &nbsp;&nbsp;&nbsp;&nbsp;<a href="/cancel_own_request/<%=reciever.id%>" class="btn btn-danger btn-xs"> Cancel</a></br></li>
 					<%end%>
             </u>
           </div>

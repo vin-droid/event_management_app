@@ -1,1 +1,24 @@
-<p>my friends</p>
+
+<% if @friends.present?%>
+<div class="panel panel-primary">
+       <div class="panel-heading">
+          <h3 class="panel-title">
+            <span class="badge" style="margin-left:40%;">
+       </div>
+       <div class="panel-body">
+          <div class="well">
+             <ul class="list-group">
+              <h2>Your Friend List </h2>
+  				<%@friends.each do|friend|%>
+         <li class="list-group-item">
+					<%=link_to "#{friend.username}", user_path(friend)%> &nbsp;&nbsp;&nbsp;&nbsp; 
+          <a href="/cancel_request/<%=friend.id%>" class="btn btn-success btn-xs">remove</a></br></li>
+					<%end%>
+            </u>
+          </div>
+      </div>
+  </div>
+<% else %>
+<h4>
+</h4>
+<%end%>

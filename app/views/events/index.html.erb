@@ -17,33 +17,47 @@
 		                  <br>
 		              <%=image_tag(event.image.url, height:"15%;", width:"15%;") if event.image.present?%>
 		                  <br>
-                      <%if current_user.is_already_joined event%>
-                        <a href="/users/<%= current_user.id%>/<%=event.id%>/leave_event" class="btn btn-danger btn-xs">Leave</a>
+                      <%count= event.guests.count%>
+                      <%is_already_joined = @current_user.is_already_joined event%>
+                      <%if is_already_joined%>
+                        <p>you and <%=count%> more people joined this event.</p>
+                        <a href="/users/<%= @current_user.id%>/<%=event.id%>/leave_event" class="btn btn-danger btn-xs">Leave</a>
                        <%else%>
-                        <a href="/users/<%= current_user.id%>/<%=event.id%>/join_event" class="btn btn-success btn-xs">Join</a>
+                       <%if  count == 0 %>
+                  <p>join this event and become first guest for this event in your friends.</p>
+                  <%else%>
+                  <p><%= count %> people already joined this event.</p>
+                  <%end%>
+                    <a href="/users/<%= @current_user.id%>/<%=event.id%>/join_event" class="btn btn-success btn-xs">Join</a>
+
                       <%end%> 
+
+                      <%if is_already_joined%>
                       <a href="/events/<%=event.id%>/like" class="btn btn-success btn-xs">Like</a> <%=event.likes.size%>
+                      
                           </br>
 		              created by :<%= event.user.username%>
                   Comments:
               <ul class="list-group">
-                <% if event.comments.present?%>
-                      <% event.comments.each do |comment|%>
+                <%comments = event.comments%>
+                <% if comments.present?%>
+                      <% comments.each do |comment|%>
                        <li class="list-group-item">
                          <div style="word-break:break-all;">
                           <%= comment.content%>
                           <br>
-                                                  <span class="badge">
+                          <span class="badge">
                             Commented By:<%= comment.user.username%></span> 
                           </div>
                           </li>
                       <%end%>
                 <%end%>
-                  <%= current_user.username%>
+                  <%= @current_user.username%>
                   <%= form_for :comment, :url=> event_comment_path(event) do |f|%>
-                  <%= f.text_area :content %><br>
+                  <%= f.text_area :content, required:true %><br>
                   <%= f.submit "Submit" %>
                   <%end%> 
+                  <%end%>
               </ul>
 
 

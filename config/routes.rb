@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     end
 
   end
+  get 'cancel_own_request/:friend_id' => 'friendships#cancel_own_request', as: :cancel_own_friendship_request
   get 'friends/requests/sent'      => 'friendships#sent_requests',   as: :sent_friendship_requests
   get 'friends/requests/recieved' => 'friendships#recieved_requests', as: :recieved_friendship_requests
   get 'send_request/:friend_id' => 'friendships#send_request', as: :send_friendship_request

@@ -6,7 +6,7 @@ before_action :find_user
 
 
 def index
-	@events  = Event.all.where.not(user_id: @current_user.id).includes(:comments,:guests)
+	@events  = Event.all.where.not(user_id: @current_user.id).includes(:guests , comments:[:user]).order('updated_at')
 end
 def show
 	@guests = Event.where(id: @event.guest_ids) 
